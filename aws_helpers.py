@@ -14,3 +14,15 @@ def save_to_dynamodb(table_name, item):
     dynamodb = boto3.resource('dynamodb')
     table = dynamodb.Table(table_name)
     return table.put_item(Item=item)
+
+def send_ses_email(sender, receiver, subject, body):
+    """Sends a summary email via AWS SES."""
+    ses = boto3.client('ses', region_name='us-east-1')
+    return ses.send_email(
+        Source=sender,
+        Destination={'ToAddresses': [receiver]},
+        Message={
+            'Subject': {'Data': subject},
+            'Body': {'Text': {'Data': body}}
+        }
+    )
