@@ -1,4 +1,4 @@
-import sys
+_llmimport sys
 import os
 from dotenv import load_dotenv
 from crewai import Crew, Process
@@ -19,7 +19,7 @@ def main():
     candidate_id = os.path.basename(resume_path).replace(".pdf", "")
 
     # 1. Initialize LLM (AWS Bedrock)
-    llm = get_bedrock_llm()
+    llm = get_llm()
 
     # 2. Anonymize Resume (LangChain)
     print("Step 1: Redacting PII...")
@@ -48,6 +48,13 @@ def main():
 
     print(f"\n✅ Screening complete for {candidate_id}")
     print(result)
+    
+    # 6: Send SES   Email
+    print("✉️ Step 4: Sending SES Notification...")
+    send_ses_email(SENDER, RECEIVER, f"Screening Complete: {candidate_id}", str(result))
 
+    print(f"\n✅ DONE! Process complete for {candidate_id}.")
+    
 if __name__ == "__main__":
+    
     main()
