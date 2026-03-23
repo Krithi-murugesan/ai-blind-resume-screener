@@ -1,12 +1,19 @@
 import boto3
-from langchain_aws import ChatBedrock
+# from langchain_aws import ChatBedrock
+from langchain_openai import ChatOpenAI
 
-def get_bedrock_llm():
-    """Returns the cost-effective Claude 3 Haiku model."""
-    return ChatBedrock(
-        model_id="anthropic.claude-3-haiku-20240307-v1:0",
-        model_kwargs={"temperature": 0},
-        region_name="us-east-1"
+# def get_bedrock_llm():
+#    """Returns the cost-effective Claude 3 Haiku model."""
+#    return ChatBedrock(
+#       model_id="anthropic.claude-3-haiku-20240307-v1:0",
+#       model_kwargs={"temperature": 0},
+#        region_name="us-east-1"
+#    )
+
+def get_llm():
+    return ChatOpenAI(
+        model="gpt-4o-mini", 
+        temperature=0
     )
 
 def save_to_dynamodb(table_name, item):
@@ -14,13 +21,18 @@ def save_to_dynamodb(table_name, item):
     dynamodb = boto3.resource('dynamodb')
     table = dynamodb.Table(table_name)
     return table.put_item(Item=item)
+#     db = boto3.resource('dynamodb', region_name='us-west-2').Table('CandidateScores')
+#    db.put_item(Item={
+#        'CandidateID': candidate_id,
+#        'ScreeningResults': str(result)
+#    })
 
-def send_ses_email(sender, receiver, subject, body):
+def send_ses_email(SENDER, RECEIVER, subject, body):
     """Sends a summary email via AWS SES."""
-    ses = boto3.client('ses', region_name='us-east-1')
+    ses = boto3.client('ses', region_name='us-west-1')
     return ses.send_email(
-        Source=sender,
-        Destination={'ToAddresses': [receiver]},
+        Source=SENDER,
+        Destination={'ToAddresses': [RECEIVER]},
         Message={
             'Subject': {'Data': subject},
             'Body': {'Text': {'Data': body}}
