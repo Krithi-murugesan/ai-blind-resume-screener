@@ -23,7 +23,7 @@ def main():
     job_description = sys.argv[2]
     candidate_id = os.path.basename(resume_path).replace(".pdf", "")
 
-    # 1. Initialize LLM (AWS Bedrock)
+    # 1. Initialize LLM (Openai CHatmodel)
     llm = get_llm()
 
     # 2. Anonymize Resume (LangChain)
