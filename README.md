@@ -1,6 +1,6 @@
 # 🕵️‍♂️ AI Blind Resume Screener
 
-Multi-Agent Recruitment Pipeline with CrewAI, LangChain, and AWS Bedrock
+Multi-Agent Recruitment Pipeline with CrewAI, LangChain, and Openai
 
 This project solves the problem of unconscious bias in recruitment. It uses a specialized AI "Crew" to anonymize resumes—stripping away PII (Personally Identifiable Information)—and then evaluates the candidate's technical skills against a dynamic Job Description (JD).
 
@@ -10,7 +10,7 @@ PII Redaction: Automatically strips names, emails, and locations using LangChain
 
 Multi-Agent Orchestration: Powered by CrewAI, featuring a Technical Recruiter Agent for skill matching and an Interviewer Agent for gap analysis.
 
-Cost-Efficient Inference: Utilizes AWS Bedrock (Claude 3 Haiku) for high-speed, low-cost LLM processing.
+Cost-Efficient Inference: Utilizes Openai for high-speed, low-cost LLM processing.
 
 Serverless Persistence: Saves all screening reports and interview questions into Amazon DynamoDB.
 
@@ -20,7 +20,7 @@ Ingestion: Python script takes a PDF and a JD as dynamic command-line inputs.
 
 Processing: * LangChain splits the PDF into chunks.
 
-AWS Bedrock redacts sensitive information.
+Openai Chat Model redacts sensitive information.
 
 Analysis: CrewAI agents collaborate to score the candidate and generate 5 technical questions.
 
@@ -32,15 +32,13 @@ Orchestration: CrewAI
 
 Framework: LangChain
 
-Cloud Provider: AWS (Bedrock, DynamoDB, IAM)
+Cloud Provider: AWS (SES, DynamoDB, IAM)
 
-LLM: Anthropic Claude 3 Haiku (via Bedrock)
+LLM: Openai Chat Model
 
 Language: Python 3.11+
 
 ## 📋 Prerequisites
-
-AWS Account with Bedrock Model Access enabled for Claude 3 Haiku.
 
 An AWS IAM User with AmazonDynamoDBFullAccess and AmazonBedrockFullAccess.
 
