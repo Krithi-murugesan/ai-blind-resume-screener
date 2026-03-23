@@ -1,8 +1,13 @@
-_llmimport sys
+
 import os
+import sys
+import boto3
 from dotenv import load_dotenv
 from crewai import Crew, Process
-from aws_helpers import get_bedrock_llm, save_to_dynamodb
+from langchain_community.document_loaders import PyPDFLoader
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_openai import ChatOpenAI  
+from aws_helpers import get_llm, save_to_dynamodb, send_ses_email
 from recruiter_utils import get_anonymized_text
 from agents import create_agents
 from tasks import create_tasks
